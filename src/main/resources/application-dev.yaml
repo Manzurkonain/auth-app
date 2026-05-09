@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/auth_app
+    username: root
+    password: Manzurkonain@1924
+#
+#    hikari:
+#      pool-name: HikariCP
+#      maximum-pool-size: 5
+#      connection-timeout: 10000
+#      idle-timeout: 600000
+#      max-lifetime: 1800000
+#      validation-timeout: 5000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
