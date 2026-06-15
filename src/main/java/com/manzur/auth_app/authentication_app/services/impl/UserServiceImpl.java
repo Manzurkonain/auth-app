@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.UUID;
 
 @Service
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
-    private final RoleRepository roleRepository;
+//    private final RoleRepository roleRepository;
 
     @Override
     @Transactional
@@ -38,13 +39,16 @@ public class UserServiceImpl implements UserService {
 
         User user = modelMapper.map(UserDTO, User.class);
         user.setProvider(UserDTO.getProvider() != null ? UserDTO.getProvider() : Provider.LOCAL);
-
+        if (user.getRoles() == null) {
+            user.setRoles(new HashSet<>());
+        }
         //role assign here to user___for authorization
         //TODO:
         //assign the default role
+//
+//        Role role = roleRepository.findByName("ROLE_" + AppConstants.GUEST_ROLE).orElse(null);
+//        user.getRoles().add(role);
 
-        Role role = roleRepository.findByName("ROLE_" + AppConstants.GUEST_ROLE).orElse(null);
-        user.getRoles().add(role);
 
 
 

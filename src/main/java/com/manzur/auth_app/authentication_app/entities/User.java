@@ -1,4 +1,5 @@
-package  com.manzur.auth_app.authentication_app.entities;
+package com.manzur.auth_app.authentication_app.entities;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,7 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.Instant;
 import java.util.*;
 
-@Data
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
