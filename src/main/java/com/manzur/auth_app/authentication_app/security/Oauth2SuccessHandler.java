@@ -32,7 +32,7 @@ public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
     private final RefreshTokenRepository refreshTokenRepository;
     private final CookieService cookieService;
     @Value("${app.auth.frontend.success-redirect}")
-    private final String frontEndSuccessUrl;
+    private String frontEndSuccessUrl;
 
 
     @Override
