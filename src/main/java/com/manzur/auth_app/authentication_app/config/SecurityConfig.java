@@ -14,10 +14,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Map;
@@ -28,7 +29,7 @@ import java.util.Map;
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
+    private final AuthenticationSuccessHandler successHandler;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -40,6 +41,11 @@ public class SecurityConfig {
                             .requestMatchers("/api/v1/auth/login").permitAll()
                             .requestMatchers("/api/v1/auth/refresh").permitAll()
                             .anyRequest().authenticated())
+                .oauth2Login(oauth2 ->
+                        oauth2.successHandler(successHandler)
+                              .failureHandler(null)
+                )
+                .logout(AbstractHttpConfigurer::disable)
                 .exceptionHandling(ex -> ex.authenticationEntryPoint((request, response, e) -> {
 
                             response.setStatus(401);
