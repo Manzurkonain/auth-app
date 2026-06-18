@@ -1,5 +1,6 @@
 package com.manzur.auth_app.authentication_app.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,7 +29,9 @@ public class User implements UserDetails {
     private String name;
     private String password;
     private String image;
-    private boolean enable = true;
+
+    private Boolean enable;
+
     private Instant createdAt = Instant.now();
     private Instant updatedAt = Instant.now();
 
@@ -87,6 +90,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.enable;
+        // Safely handle null values from the database
+        return this.enable != null && this.enable;
     }
 }

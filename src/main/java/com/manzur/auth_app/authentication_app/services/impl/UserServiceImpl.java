@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByEmail(UserDTO.getEmail())) {
             throw new IllegalArgumentException("User with given email already exists");
         }
+        UserDTO.setEnable(true);
 
         User user = modelMapper.map(UserDTO, User.class);
         user.setProvider(UserDTO.getProvider() != null ? UserDTO.getProvider() : Provider.LOCAL);
